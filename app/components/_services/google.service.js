@@ -5,7 +5,7 @@
   // the google client has loaded
   window.OnLoadCallback = function() {
     angular.element(document.body).injector().get('GoogleService').init();
-  }
+  };
 
   /**
    * Serves as a way to interact with the google client api
@@ -67,7 +67,7 @@
               return _.extend(item.snippet, { id: item.id.videoId, url: 'http://youtube.com/watch?v=' + item.id.videoId });
             })
             .value();
-        })
+        });
     };
 
     service.isReady = function() {

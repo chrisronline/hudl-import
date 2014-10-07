@@ -9,9 +9,9 @@
           if (newValue === 'true') {
             $element[0].focus();
           }
-        })
+        });
       }
-    }
+    };
   }
 
   angular.module('hudl')
