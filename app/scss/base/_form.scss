@@ -10,8 +10,8 @@
   color: $color-gray--dark;
   display: block;
   margin: 20px auto;
-  box-sizing: border-box;
   text-align: center;
+  width: 100%;
   &:disabled {
     cursor: not-allowed;
   }
