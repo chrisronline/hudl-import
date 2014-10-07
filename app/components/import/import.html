@@ -36,6 +36,10 @@
     <input type="text" ng-model="query" ng-disabled="step == 1" ng-change="search()"
       class="textfield" focus-trigger="{{ step == 2 }}"/>
     <p ng-if="!searching && videos.length == 0">No results found</p>
+    <p ng-if="!searching && videos.length > 0" class="help-text">
+      Click a video to add it to the list of videos to import.
+      Once selected, a red x will appear in the top right - clicking this will deselect the video.
+    </p>
     <p ng-if="searching">Loading...</p>
     <ul>
       <li ng-repeat="video in videos track by video.id" class="video">
