@@ -1,0 +1,79 @@
+<h1>Import from YouTube</h1>
+
+<section class="step step1" ng-class="{'active': step == 1, 'completed': step > 1 }">
+  <header>
+    <h2>Step 1</h2>
+    <h3 ng-if="step > 1">
+      <i class="fa fa-check"></i>
+    </h3>
+  </header>
+  <div class="step-content">
+    <div ng-show="authed_user">
+      Hi {{authed_user.displayName}}
+    </div>
+    <div ng-show="!authed_user">
+      <p>Authenticate with Google to give us access to your YouTube videos</p>
+      <button class="btn btn-google" ng-click="authenticate()" ng-disabled="authenticating">
+        <span ng-if="!authenticating">
+          <i class="fa fa-google"></i>
+          &nbsp;Authenticate
+        </span>
+        <span ng-if="authenticating">
+          <i class="fa fa-spinner fa-spin"></i>
+          &nbsp;Loading...
+        </span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="step step2" ng-class="{'active': step == 2, 'completed': step > 2 }">
+  <header>
+    <h2>Step 2</h2>
+  </header>
+  <div class="step-content">
+    <p>Search for the videos you want to import.</p>
+    <input type="text" ng-model="query" ng-disabled="step == 1" ng-change="search()"
+      class="textfield" focus-trigger="{{ step == 2 }}"/>
+    <p ng-if="!searching && videos.length == 0">No results found</p>
+    <p ng-if="searching">Loading...</p>
+    <ul>
+      <li ng-repeat="video in videos track by video.id" class="video">
+        <h3 title="{{ video.title }}">
+          <a ng-href="{{ video.url }}">{{ video.title }}</a>
+        </h3>
+        <div class="video-image pointer" ng-class="{'added': video._added }" ng-click="add(video)">
+          <span ng-if="video._added" class="video-remove" ng-click="remove($event, video)">
+            <i class="fa fa-times-circle"></i>
+          </span>
+          <div class="absolute-center">
+            <span ng-if="video._added" class="video-added relative-center">
+              <i class="fa fa-check"></i>
+              &nbsp;Added
+            </span>
+            <span ng-if="!video._added" class="relative-center video-add">
+              <i class="fa fa-plus"></i>
+            </span>
+          </div>
+
+          <img ng-src="{{ video.thumbnails.medium.url }}"/>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="step step3" ng-class="{'active': step == 2 && videos.length }">
+  <header>
+    <h2>Step 3</h2>
+  </header>
+  <div class="step-content">
+    <p>Import!</p>
+    <ul class="import-list">
+      <li ng-repeat="video in videos | filter:{_added:true}">
+        <a href="{{video.url}}">{{video.title}}</a>
+      </li>
+    </ul>
+    <button class="btn btn-primary" ng-click="import()" ng-disabled="step == 1">Import</button>
+  </div>
+</section>

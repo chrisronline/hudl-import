@@ -1,0 +1,18 @@
+.textfield {
+  font-family: 'Open Sans';
+  outline: none;
+  box-sizing: border-box;
+  padding: 11px;
+  border-radius: $border-radius;
+  border: solid 1px $color-gray--light;
+  background: $color-white;
+  font-size: 17px;
+  color: $color-gray--dark;
+  display: block;
+  margin: 20px auto;
+  box-sizing: border-box;
+  text-align: center;
+  &:disabled {
+    cursor: not-allowed;
+  }
+}

@@ -1,0 +1,31 @@
+.btn {
+  font-family: 'Open Sans';
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 4px;
+  padding: 5px 21px;
+  border: none;
+  height: 40px;
+  box-sizing: border-box;
+  cursor: pointer;
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+.btn > i {
+  vertical-align: middle;
+}
+.btn-sm {
+  height: 25px;
+}
+.btn-md {
+  height: 34px;
+}
+.btn-primary {
+  background-color: $color-green;
+  color: $color-white;
+}
+.btn-google {
+  background-color: $color-google;
+  color: $color-white;
+}
