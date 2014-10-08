@@ -8,11 +8,13 @@ var autoprefixer = require('gulp-autoprefixer');
 var paths = {
   sass: {
     src: ['app/scss/**/*.scss', 'app/components/**/*.scss'],
-    dest: 'app/css'
+    dest: 'app/css',
+    name: 'app.css'
   },
   js: {
     src: ['app/components/**/*.js'],
-    dest: 'app/js'
+    dest: 'app/js',
+    name: 'components.js'
   },
   html: {
     src: ['app/index.html', 'app/components/**/*.html']
@@ -22,7 +24,7 @@ var paths = {
 gulp.task('sass', function () {
   gulp.src(paths.sass.src)
     .pipe(sass())
-    .pipe(concat('app.css'))
+    .pipe(concat(paths.sass.name))
     .pipe(autoprefixer({
       browsers: ['last 2 versions', 'ie >= 9'],
     }))
@@ -32,7 +34,7 @@ gulp.task('sass', function () {
 
 gulp.task('js', function() {
   gulp.src(paths.js.src)
-    .pipe(concat('components.js'))
+    .pipe(concat(paths.js.name))
     .pipe(gulp.dest(paths.js.dest))
     .pipe(browserSync.reload({stream:true}));
 });
@@ -48,13 +50,13 @@ gulp.task('watch', function() {
   gulp.watch(paths.html.src, ['html']);
 });
 
-gulp.task('autoprefix', function () {
-    return gulp.src(paths.sass.dest + '/app.css')
-        .pipe(autoprefixer({
-            browsers: ['last 2 versions', 'ie >= 9'],
-            cascade: false
-        }))
-        .pipe(gulp.dest('dist'));
+gulp.task('autoprefix', ['sass'], function () {
+  return gulp.src(paths.sass.dest + '/' + paths.sass.name)
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions', 'ie >= 9'],
+      cascade: false
+    }))
+    .pipe(gulp.dest(paths.sass.dest));
 });
 
 gulp.task('browser-sync', function() {
@@ -72,4 +74,4 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
-gulp.task('default', ['sass', 'js', 'watch', 'browser-sync']);
+gulp.task('default', ['sass', 'autoprefix', 'js', 'watch', 'browser-sync']);
